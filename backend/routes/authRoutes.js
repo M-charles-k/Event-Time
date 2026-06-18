@@ -12,7 +12,7 @@ router.post('/register', async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const { data, error } = await supabase
-    .from('Users')
+    .from('users')
     .insert([{ name, email, password: hashedPassword }]);
 
   if (error) return res.status(500).json({ success: false, message: error.message });
@@ -25,7 +25,7 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   const { data, error } = await supabase
-    .from('Users')
+    .from('users')
     .select('*')
     .eq('email', email)
     .single();
